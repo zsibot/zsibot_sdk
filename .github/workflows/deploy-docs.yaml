@@ -15,35 +15,34 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: '3.x'
-     - name: Dynamic documentation configuration
-       run: |
-         # 提取组织名和仓库名
-         REPOSITORY="${{ github.repository }}"
-         ORG_NAME=$(echo "$REPOSITORY" | cut -d'/' -f1)
-         REPO_NAME=$(echo "$REPOSITORY" | cut -d'/' -f2)
-         
-         # 生成URL
-         SITE_URL="https://$ORG_NAME.github.io/$REPO_NAME/"
-         REPO_URL="https://github.com/$REPOSITORY"
-         
-         # 格式化文档标题（可选）
-         DOCS_TITLE="$ORG_NAME SDK Documentation"
-         # 或者包含项目名：DOCS_TITLE="$ORG_NAME $REPO_NAME Documentation"
-         
-         # 执行替换
-         sed -i "s|site_name: .*|site_name: $DOCS_TITLE|g" mkdocs.yml
-         sed -i "s|site_url: .*|site_url: $SITE_URL|g" mkdocs.yml
-         sed -i "s|repo_url: .*|repo_url: $REPO_URL|g" mkdocs.yml
-         sed -i "s|repo_name: .*|repo_name: $REPOSITORY|g" mkdocs.yml
-         
-         # 更新edit_uri（如果需要）
-         sed -i "s|edit_uri: .*|edit_uri: edit/main/docs/|g" mkdocs.yml   
+        
+    - name: Dynamic documentation configuration
+      run: |
+        # 提取组织名和仓库名
+        REPOSITORY="${{ github.repository }}"
+        ORG_NAME=$(echo "$REPOSITORY" | cut -d'/' -f1)
+        REPO_NAME=$(echo "$REPOSITORY" | cut -d'/' -f2)
+        
+        # 生成URL
+        SITE_URL="https://$ORG_NAME.github.io/$REPO_NAME/"
+        REPO_URL="https://github.com/$REPOSITORY"
+        
+        # 格式化文档标题
+        DOCS_TITLE="$ORG_NAME SDK Documentation"
+        
+        # 执行替换
+        sed -i "s|site_name: .*|site_name: $DOCS_TITLE|g" mkdocs.yml
+        sed -i "s|site_url: .*|site_url: $SITE_URL|g" mkdocs.yml
+        sed -i "s|repo_url: .*|repo_url: $REPO_URL|g" mkdocs.yml
+        sed -i "s|repo_name: .*|repo_name: $REPOSITORY|g" mkdocs.yml
+        
+        # 更新edit_uri
+        sed -i "s|edit_uri: .*|edit_uri: edit/main/docs/|g" mkdocs.yml
+        
     - name: Install dependencies
       run: |
         pip install --upgrade pip
-        pip install mkdocs   
-    - name: Install dependencies
-      run: pip install mkdocs mkdocs-material
+        pip install mkdocs mkdocs-material
       
     - name: Build documentation
       run: mkdocs build
