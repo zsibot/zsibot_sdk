@@ -1,50 +1,55 @@
-# .github/workflows/deploy-docs.yml
-name: Robot Dog SDK Documentation
+name: Deploy Robot Dog SDK Documentation
 
 on:
   push:
     branches: [ main, master ]
 
-# 明确设置权限（即使全局是只读，这里可以覆盖）
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-    
-    - name: Setup Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.x'
-        
-    - name: Dynamic configuration
-      run: |
-        REPOSITORY="${{ github.repository }}"
-        ORG_NAME=$(echo "$REPOSITORY" | cut -d'/' -f1)
-        REPO_NAME=$(echo "$REPOSITORY" | cut -d'/' -f2)
-        
-        sed -i "s|site_name: .*|site_name: $ORG_NAME SDK Documentation|g" mkdocs.yml
-        sed -i "s|site_url: .*|site_url: https://$ORG_NAME.github.io/$REPO_NAME/|g" mkdocs.yml
-        sed -i "s|repo_url: .*|repo_url: https://github.com/$REPOSITORY|g" mkdocs.yml
-        sed -i "s|repo_name: .*|repo_name: $REPOSITORY|g" mkdocs.yml
-        
-    - name: Install dependencies
-      run: pip install mkdocs mkdocs-material
-      
-    - name: Build documentation
-      run: mkdocs build
-      
-    - name: Deploy
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./site
-        force_orphan: true  # 避免历史冲突
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Dynamic configuration
+        run: |
+          REPOSITORY="${{ github.repository }}"
+          ORG_NAME=$(echo "$REPOSITORY" | cut -d'/' -f1)
+          REPO_NAME=$(echo "$REPOSITORY" | cut -d'/' -f2)
+          
+          sed -i "s|site_name: .*|site_name: $ORG_NAME SDK Documentation|g" mkdocs.yml
+          sed -i "s|site_url: .*|site_url: https://$ORG_NAME.github.io/$REPO_NAME/|g" mkdocs.yml
+          sed -i "s|repo_url: .*|repo_url: https://github.com/$REPOSITORY|g" mkdocs.yml
+          sed -i "s|repo_name: .*|repo_name: $REPOSITORY|g" mkdocs.yml
+
+      - name: Install dependencies
+        run: pip install mkdocs mkdocs-material
+
+      - name: Build documentation
+        run: mkdocs build --site-dir ./_site
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./_site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
