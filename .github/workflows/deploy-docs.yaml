@@ -5,44 +5,39 @@ on:
   push:
     branches: [ main, master ]
 
+# 明确设置权限（即使全局是只读，这里可以覆盖）
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    
     steps:
     - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
     
     - name: Setup Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.x'
         
-    - name: Dynamic documentation configuration
+    - name: Dynamic configuration
       run: |
-        # 提取组织名和仓库名
         REPOSITORY="${{ github.repository }}"
         ORG_NAME=$(echo "$REPOSITORY" | cut -d'/' -f1)
         REPO_NAME=$(echo "$REPOSITORY" | cut -d'/' -f2)
         
-        # 生成URL
-        SITE_URL="https://$ORG_NAME.github.io/$REPO_NAME/"
-        REPO_URL="https://github.com/$REPOSITORY"
-        
-        # 格式化文档标题
-        DOCS_TITLE="$ORG_NAME SDK Documentation"
-        
-        # 执行替换
-        sed -i "s|site_name: .*|site_name: $DOCS_TITLE|g" mkdocs.yml
-        sed -i "s|site_url: .*|site_url: $SITE_URL|g" mkdocs.yml
-        sed -i "s|repo_url: .*|repo_url: $REPO_URL|g" mkdocs.yml
+        sed -i "s|site_name: .*|site_name: $ORG_NAME SDK Documentation|g" mkdocs.yml
+        sed -i "s|site_url: .*|site_url: https://$ORG_NAME.github.io/$REPO_NAME/|g" mkdocs.yml
+        sed -i "s|repo_url: .*|repo_url: https://github.com/$REPOSITORY|g" mkdocs.yml
         sed -i "s|repo_name: .*|repo_name: $REPOSITORY|g" mkdocs.yml
         
-        # 更新edit_uri
-        sed -i "s|edit_uri: .*|edit_uri: edit/main/docs/|g" mkdocs.yml
-        
     - name: Install dependencies
-      run: |
-        pip install --upgrade pip
-        pip install mkdocs mkdocs-material
+      run: pip install mkdocs mkdocs-material
       
     - name: Build documentation
       run: mkdocs build
@@ -52,3 +47,4 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./site
+        force_orphan: true  # 避免历史冲突
