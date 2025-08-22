@@ -51,7 +51,6 @@ theme:
     # 其他功能
     - toc.follow                # 目录跟随
     - toc.integrate             # 集成目录
-
   # 字体配置
   font:
     text: Roboto
@@ -78,10 +77,44 @@ theme:
 # 版权信息
 # copyright: Copyright &copy; 2024 Your Company
 
+markdown_extensions:
+  - admonition
+  - pymdownx.superfences
+  - pymdownx.details
+  - pymdownx.tabbed
+  - pymdownx.highlight:  # 注意这里的冒号，表示下面是它的子配置
+      linenums: true        # 子项：缩进一层（通常2或4个空格）
+      linenums_style: "table"  # 同样缩进一层
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.keys
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.tasklist
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
 
 # 插件
 plugins:
   - search
+    #   - mermaid2:
+    #       # 可选：配置 Mermaid 主题（light/dark/default）
+    #       theme: default
+    #       # 可选：设置图表默认宽度
+    #       width: 100%
+    #       # 可选：启用自定义配置
+    #       custom_config:
+    #         startOnLoad: true
+    #         flowchart:
+    #           curve: basis
 nav:
   - Home: index.md
   - Downloads: sdk_download.md
