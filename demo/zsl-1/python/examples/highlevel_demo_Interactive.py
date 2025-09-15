@@ -1,4 +1,3 @@
-import mc_sdk_zsl_1_py
 import os
 import platform
 import sys
@@ -10,6 +9,7 @@ lib_path = os.path.abspath(
     f'{os.path.dirname(__file__)}/../../../../lib/zsl-1/{arch}')
 sys.path.insert(0, lib_path)
 
+import mc_sdk_zsl_1_py
 
 def print_menu():
     """Prints the interactive command menu."""

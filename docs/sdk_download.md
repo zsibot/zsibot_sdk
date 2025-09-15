@@ -21,4 +21,4 @@ grep -oP 'motion-control_\K[^_]+' /etc/release/*[^rootfs]*.yaml
 
 | 运控版本编号 | SDK版本 |
 | --- | --- |
-| 0.2.6 ~ 最新 | [0.2.6](https://github.com/zsibot/zsibot_sdk/tree/v0.2.6) |
+| 0.2.6 ~ 最新 | [0.2.6](https://github.com/zsibot/zsibot_sdk/tree/v0.2.6-patch1) |
