@@ -109,8 +109,6 @@ markdown_extensions:
 # 插件
 plugins:
   - search
-  - include-markdown
-
 nav:
   - Home: index.md
   - Downloads: sdk_download.md
