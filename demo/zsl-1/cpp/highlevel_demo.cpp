@@ -5,7 +5,7 @@
 #include <thread>
 #include <unistd.h>
 
-using namespace mc_sdk::ZSL_1;
+using namespace mc_sdk::zsl_1;
 
 // 设置终端为非阻塞模式
 void set_conio_terminal_mode() {

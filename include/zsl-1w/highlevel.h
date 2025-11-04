@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 namespace mc_sdk {
-namespace zsl_1 {
+namespace zsl_1w {
 
 class HighLevel {
  private:
@@ -22,12 +22,11 @@ class HighLevel {
   uint32_t passive();
   uint32_t move(const float vx, const float vy, const float yaw_rate);
 
-  uint32_t jump();
-  uint32_t frontJump();
-  uint32_t backflip();
+  uint32_t crawl(const float vx, const float vy, const float yaw_rate);
+  uint32_t climb(const float vx, const float vy, const float yaw_rate);
+  void cancelCrawl();
+  void cancelClimb();
   uint32_t shakeHand();
-  uint32_t twoLegStand(const float vx, const float yaw_rate);
-  void cancelTwoLegStand();
   uint32_t attitudeControl(const float roll_vel, const float pitch_vel,
                            const float yaw_vel, const float height_vel);
 
@@ -45,15 +44,18 @@ class HighLevel {
   std::vector<float> getLegAbadJoint();
   std::vector<float> getLegHipJoint();
   std::vector<float> getLegKneeJoint();
+  std::vector<float> getLegFootJoint();
 
   std::vector<float> getLegAbadJointVel();
   std::vector<float> getLegHipJointVel();
   std::vector<float> getLegKneeJointVel();
+  std::vector<float> getLegFootJointVel();
 
   std::vector<float> getLegAbadJointTorque();
   std::vector<float> getLegHipJointTorque();
   std::vector<float> getLegKneeJointTorque();
+  std::vector<float> getLegFootJointTorque();
 };
 
-}  // namespace zsl_1
+}  // namespace zsl_1w
 }  // namespace mc_sdk

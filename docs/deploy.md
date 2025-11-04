@@ -1,6 +1,8 @@
-# How to Deploy
+# 如何部署SDK
 
-!!! tip "当前文档适用于SDK版本v0.2.6以上，运控版本v0.2.6以上（狗本体0.2.0以上）"
+!!! tip "当前文档适用于"
+    zsi-l设备SDK版本v0.2.6以上，运控版本v0.2.6以上（机器人本体0.2.0以上）  
+    zsi-w设备SDK版本v0.2.7以上，运控版本v0.3.1以上（机器人本体0.3.3以上）
 
 
 **环境依赖**
@@ -9,14 +11,14 @@
 - CMake 3.8+
 - GCC 11+
 - Eigen3
-- boost
+- boost 1.74
 - python3
 
 
 ## 1. 网络通讯
 设备上配备无线网络与有线网络接口，其中无线网络信息位于设备右侧标签，标签内标注有设备SSID与密码信息。
 
-![图片](images/ZSL-1 connection.png)
+![图片](images/net-connection.png)
 
 机器人默认ip:
 
@@ -26,9 +28,9 @@
 | 有线网络 | 192.168.168.168 | 无 |
 
 
-无线网络配备DHCP服务，连接上无线网络后，确保操作设备无线网络未配置固定IP，可以直接通过192.168.234.1与狗建立通讯。
+无线网络配备DHCP服务，连接上无线网络后，确保操作设备无线网络未配置固定IP，可以直接通过192.168.234.1与机器人建立通讯。
 
-有线网络不配备DHCP服务，通过有线连接后，需要再操作设备有线网络配置固定IP，且IP为168网段，即可与狗建立通讯。
+有线网络不配备DHCP服务，通过有线连接后，需要再操作设备有线网络配置固定IP，且IP为168网段，即可与机器人建立通讯。
 
 机器人ip如有变更，需配置[SDK_CLIENT_IP](#23-sdk_client_ip)
 
@@ -47,11 +49,15 @@ ssh firefly@{IP}    #密码：firefly
 target_ip: "127.0.0.1"
 target_port: 43988
 ```
-将`target_ip`修改为控制端设备连接狗之后的IP地址，`target_port`如无必要可不修改。
+将`target_ip`修改为控制端设备连接机器人之后的IP地址，`target_port`如无必要可不修改。
 默认设备仅支持WiFi网络，即`target_ip`为`192.168.234.X`的IP地址，如需要通过网线或其他网段IP通讯，需配合步骤2.4配置`SDK_CLIENT_IP`
 !!! warning "参数配置后需进行重启设备生效！"
 ### 2.3 配置SDK_CLIENT_IP
-如需要使用网线或其他非192.168.234.X网段IP控制设备，需要通过vim命令修改`/opt/app_launch/start_motion_control.sh`文件：
+如需要使用网线或其他非192.168.234.X网段IP控制设备，需要通过vim命令修改
+
+小狗点足(zsl-1)修改`/opt/app_launch/start_motion_control.sh`文件：
+
+小狗轮足(zsl-1w)修改`/opt/app_launch/start_motion_control_xgw.sh`文件：
 
 ```bash hl_lines="27"
 
@@ -89,9 +95,13 @@ cd /opt/export/mc/bin && taskset -c 7 ./mc_ctrl r
 
 在上面代码27行，增加对应配置:`export SDK_CLIENT_IP="机器人新ip"`，并将机器人的IP地址填写在对应参数内，如使用有线网络，则将机器人新IP修改为192.168.168.168,如果是其他IP则修改到对应IP即可。
 
+!!! danger "[target_ip](#22-sdk)与[SDK_CLIENT_IP](#23-sdk_client_ip)所配置IP必须为同一网段！"
+
 !!! warning "参数配置后需进行重启设备生效！"
-!!! danger "此参数配置后有概率导致机器狗无法使用遥控器！"
-    配置SDK_CLIENT_IP后，若设备开机后网络未初始化完成，对应网卡未分配IP地址，导致运控程序绑定IP地址失败，会造成机狗无法使用遥控器。
+
+!!! danger "此参数配置后有概率导致机器人无法使用遥控器！"
+    配置SDK_CLIENT_IP后，若设备开机后网络未初始化完成，对应网卡未分配IP地址，导致运控程序绑定IP地址失败，会造成机器人无法使用遥控器。[解决方案](faq.md#2-ip)
+
 ---
 
 ## 3. 修改SDKDemo配置
@@ -105,9 +115,9 @@ constexpr int CLIENT_PORT = 43988;      // 本地端口
 std::string CLIENT_IP = "192.168.234.15"; // 本地 IP 地址
 // 机器人ip默认192.168.234.1，如果需要更改机器人IP可通过init_robot()接口传入更改后的机器人ip
 ```
-### 3.1. 配置Python IP 和端口
+### 3.2. 配置Python IP 和端口
 ```python
-app.initRobot("192.168.234.15",43988, "192.168.234.1") # (机器人IP, 本地端口, 机器人IP)
+app.initRobot("192.168.234.15",43988, "192.168.234.1") # (本地IP, 本地端口, 机器人IP)
 ``` 
 !!! warning "配置参数中机器人IP和本地端口需与[sdk_config](#22-sdk)中target_ip和target_port参数保持一致。"
     
@@ -121,6 +131,7 @@ app.initRobot("192.168.234.15",43988, "192.168.234.1") # (机器人IP, 本地端
 
 
 ### 4.1 编译demo
+#### ZSL-1
 ```Shell
 cd demo/zsl-1/cpp
 mkdir build
@@ -129,7 +140,18 @@ cmake ..
 make -j6
 ```
 
+#### ZSL-1w
+```Shell
+cd demo/zsl-1w/cpp
+mkdir build
+cd build
+cmake ..
+make -j6
+```
+
+
 ### 4.2 运行c++demo
+#### ZSL-1
 ```Shell
 cd demo/zsl-1/cpp/build
 ./highlevel_demo
@@ -137,8 +159,16 @@ or
 ./lowlevel_demo
 ```
 
-### 4.3 运行python demo
 
+#### ZSL-1w
+```Shell
+cd demo/zsl-1w/cpp/build
+./highlevel_demo
+```
+!!! note "ZSL-1w 不提供 LowLevel 接口，因此仅有 `highlevel_demo`。"
+    
+### 4.3 运行python demo
+#### ZSL-1
 ```Shell
 cd demo/zsl-1/python/examples
 python highlevel_demo.py
@@ -146,8 +176,17 @@ or
 python lowlevel_demo.py
 ```
 
-### 4.4 基于cmake使用mc_sdk
 
+#### ZSL-1w
+```Shell
+cd demo/zsl-1w/python/examples
+python highlevel_demo.py
+```
+
+!!! danger "若运行后出现connect time out，参考解决方案[connect time out](faq.md#1-connect-time-out)"
+
+### 4.4 基于cmake使用mc_sdk
+#### ZSL-1
 ```cmake
 cmake_minimum_required(VERSION 3.16)
 
@@ -207,8 +246,33 @@ target_include_directories(lowlevel_demo PRIVATE
 )
 ```
 
+---
+
+#### ZSL-1w（CMake 路径差异）
+与 ZSL-1 配置一致，仅需将库与头文件路径中的 `<model>` 改为 `zsl-1w`：
+```cmake
+# 库文件路径：lib/zsl-1w/${ARCH}
+set(LIB_PATH "${CMAKE_SOURCE_DIR}/../../../lib/zsl-1w/${ARCH}")
+
+# 查找库：mc_sdk_zsl_1w_${ARCH}
+find_library(MC_SDK_LIB 
+    NAMES "mc_sdk_zsl_1w_${ARCH}"
+    PATHS ${LIB_PATH}
+    NO_DEFAULT_PATH
+    REQUIRED
+)
+
+# 头文件包含路径
+target_include_directories(highlevel_demo PRIVATE 
+    ${CMAKE_SOURCE_DIR}/../../../include
+    ${CMAKE_SOURCE_DIR}/../../../include/zsl-1w
+)
+```
+
+
 
 ### 4.5 基于python使用mc_sdk
+#### ZSL-1
 ```python
 import os
 import platform
@@ -219,6 +283,18 @@ sys.path.insert(0, lib_path)
 
 import mc_sdk_zsl_1_py
 ```
+
+
+#### ZSL-1w
+```python
+import os, platform, sys
+arch = platform.machine().replace('amd64', 'x86_64').replace('arm64', 'aarch64')
+lib_path = os.path.abspath(f'{os.path.dirname(__file__)}/../../../../lib/zsl-1w/{arch}')
+sys.path.insert(0, lib_path)
+
+import mc_sdk_zsl_1w_py
+```
+
 
 
   

@@ -1,16 +1,25 @@
 # Changelog
 
-## 25.07.16
+## 2025-11-04
+[v0.2.7]
 
-Initial release
+- support zsl-1w product
 
-## 25.07.18
+- add lowlevel interface
 
-Fix issues
+- change checkconnect default value to false
 
-## 25.07.19
+---
+## 2025-09-15
+[v0.2.6-patch1]
 
-Updating interface
+- fix checkconnect bug
+
+---
+## 2025-07-19
+[v0.2.6]
+
+- Updating interface
 
 ### Highlevel
 
@@ -79,3 +88,12 @@ Updating interface
 - `getRPY()`
 - `getBodyAcc()`
 - `getBodyGyro()`
+---
+## 2025-07-18
+
+Fix issues
+
+---
+## 2025-07-16
+
+Initial release

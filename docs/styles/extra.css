@@ -1,0 +1,68 @@
+/* 自定义样式以改善API文档的可读性 */
+/* 增加接口标题的视觉区分度 */
+.md-typeset h3 {
+  border-left: 4px solid #3f51b5;
+  padding-left: 16px;
+  margin-top: 32px;
+  margin-bottom: 24px;
+  background-color: #f5f5f5;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+/* 增加接口内容区域的区分 */
+.md-typeset h3 + p + p strong,
+.md-typeset h3 + p + p + p strong,
+.md-typeset h3 + p + p + p + p strong,
+.md-typeset h3 + p + p + p + p + p strong,
+.md-typeset h3 + p + p + p + p + p + p strong,
+.md-typeset h3 + p + p + p + p + p + p + p strong {
+  display: block;
+  margin-top: 16px;
+  margin-bottom: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+/* 函数原型代码块样式 */
+.md-typeset h3 + p + p strong + p code,
+.md-typeset h3 + p + p + p strong + p code,
+.md-typeset h3 + p + p + p + p strong + p code,
+.md-typeset h3 + p + p + p + p + p strong + p code,
+.md-typeset h3 + p + p + p + p + p + p strong + p code,
+.md-typeset h3 + p + p + p + p + p + p + p strong + p code {
+  background-color: #f0f0f0;
+  border-left: 4px solid #3f51b5;
+  padding: 8px 16px;
+  margin: 16px 0;
+  display: block;
+  font-weight: normal;
+}
+
+/* 表格样式优化 */
+.md-typeset table {
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-bottom: 16px;
+}
+
+.md-typeset table th {
+  background-color: #f5f5f5;
+  font-weight: bold;
+}
+
+/* 加强标题字体 */
+.md-typeset h4 {
+  font-weight: 600;
+  color: #333;
+  margin-top: 24px;
+}
+
+/* 特殊处理函数原型代码块 */
+.prototype-code {
+  background-color: #f0f0f0;
+  border-left: 4px solid #3f51b5;
+  padding: 8px 16px;
+  margin: 16px 0;
+}

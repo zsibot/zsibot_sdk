@@ -60,6 +60,10 @@ theme:
   icon:
     repo: fontawesome/brands/github
 
+# 自定义目录
+extra_css:
+  - styles/extra.css
+
 # 社交链接
 # extra:
 #   social:
@@ -69,7 +73,7 @@ theme:
 #       link: https://twitter.com/your-handle
 
 # 分析统计（可选）
-# extra:
+extra:
   analytics:
     provider: google
     property: YOUR-GA-ID
@@ -105,22 +109,21 @@ markdown_extensions:
 # 插件
 plugins:
   - search
-    #   - mermaid2:
-    #       # 可选：配置 Mermaid 主题（light/dark/default）
-    #       theme: default
-    #       # 可选：设置图表默认宽度
-    #       width: 100%
-    #       # 可选：启用自定义配置
-    #       custom_config:
-    #         startOnLoad: true
-    #         flowchart:
-    #           curve: basis
+  - include-markdown
+
 nav:
   - Home: index.md
   - Downloads: sdk_download.md
   - Deploy: deploy.md
-  - Architecture: architecutre.md
-  - Interface: api.md
+  - Architecture: architecture.md
+  - Interface: 
+    - api.md
+    - zsl-1 API: api_zsl-1.md
+    - zsl-1w API: api_zsl-1w.md
+    - zsm-1w API: api_zsm-1w.md
+    # - dog task API: api_dog_task.md
+    - lowlevel API: api_lowlevel.md
+  - Videos: video.md
   - FAQ: faq.md
   - Change Log: changelog.md
   - About: about.md

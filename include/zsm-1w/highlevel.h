@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 namespace mc_sdk {
-namespace ZSM_1W {
+namespace zsm_1w {
 
 class HighLevel {
  private:
@@ -49,5 +49,5 @@ class HighLevel {
   std::vector<float> getLegFootJointTorque();
 };
 
-}  // namespace ZSM_1W
+}  // namespace zsm_1w
 }  // namespace mc_sdk
