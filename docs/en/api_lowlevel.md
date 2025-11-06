@@ -38,9 +38,9 @@ typedef struct joint_control_def {
 **Structure Prototype**
 ```cpp
 typedef struct leg_control_def {
-    joint_control_t abad; // Hip abduction/adduction control
-    joint_control_t hip;  // Hip pitch control
-    joint_control_t knee; // Knee control
+    joint_control_t abad; // Hip joint abduction/adduction control
+    joint_control_t hip;  // Hip joint pitch control
+    joint_control_t knee; // Knee joint control
     joint_control_t foot; // Foot control
     int32_t flags;        // Flag bits, always set to 1
 } leg_control_t;
@@ -50,66 +50,23 @@ typedef struct leg_control_def {
 
 | Field Name | Type | Description |
 |--------|------|------|
-| abad   | joint_control_t | Hip abduction/adduction joint control |
-| hip    | joint_control_t | Hip pitch joint control |
-| knee   | joint_control_t | Knee joint control |
-| foot   | joint_control_t | Foot control |
+| abad   | joint_control_t | Hip joint abduction/adduction control parameters |
+| hip    | joint_control_t | Hip joint pitch control parameters |
+| knee   | joint_control_t | Knee joint control parameters |
+| foot   | joint_control_t | Foot control parameters |
 | flags  | int32_t | Flag bits, always set to 1 |
 
 ---
 
-#### 1.1.3 Robot Control Command
-
-**Structure Prototype**
-```cpp
-typedef struct robot_cmd_def {
-    leg_control_t legs[4];  // Leg control commands for four legs
-    uint32_t crc;           // CRC checksum
-    uint32_t counter;       // Command counter
-} robot_cmd_t;
-```
-
-**Field Description**
-
-| Field Name | Type | Description |
-|--------|------|------|
-| legs   | leg_control_t[4] | Leg control commands for four legs (FR, FL, RR, RL) |
-| crc    | uint32_t | CRC checksum |
-| counter| uint32_t | Command counter |
-
----
-
-#### 1.1.4 IMU Data
-
-**Structure Prototype**
-```cpp
-typedef struct imu_data_def {
-    float quaternion[4];   // Quaternion (w, x, y, z)
-    float angular_velocity[3]; // Angular velocity (x, y, z) (rad/s)
-    float linear_acceleration[3]; // Linear acceleration (x, y, z) (m/s^2)
-    float temperature;     // Temperature (°C)
-} imu_data_t;
-```
-
-**Field Description**
-
-| Field Name | Type | Description |
-|--------|------|------|
-| quaternion | float[4] | Quaternion (w, x, y, z) |
-| angular_velocity | float[3] | Angular velocity (x, y, z), unit rad/s |
-| linear_acceleration | float[3] | Linear acceleration (x, y, z), unit m/s^2 |
-| temperature | float | Temperature, unit °C |
-
----
-
-#### 1.1.5 Joint State
+#### 1.1.3 Joint State Parameters
 
 **Structure Prototype**
 ```cpp
 typedef struct joint_state_def {
-    float pos;    // Current position (rad)
-    float vel;    // Current velocity (rad/s)
-    float torque; // Current torque (N·m)
+    int32_t flags; // Status flag bits
+    float p;       // Current angle (unit: radians)
+    float v;       // Current angular velocity (unit: radians/second)
+    float t;       // Current torque (unit: Newton·meters)
 } joint_state_t;
 ```
 
@@ -117,21 +74,26 @@ typedef struct joint_state_def {
 
 | Field Name | Type | Description |
 |--------|------|------|
-| pos    | float | Current position, unit rad |
-| vel    | float | Current velocity, unit rad/s |
-| torque | float | Current torque, unit N·m |
+| flags  | int32_t | Status flag bits, contains motor status information |
+| p      | float | Current angle, unit in radians |
+| v      | float | Current angular velocity, unit in radians/second |
+| t      | float | Current torque, unit in Newton·meters |
+
+**Remarks**
+
+- Each bit of `flags` represents different status information, such as voltage, temperature, fault flags, etc.
 
 ---
 
-#### 1.1.6 Leg State
+#### 1.1.4 Leg State Parameters
 
 **Structure Prototype**
 ```cpp
 typedef struct leg_state_def {
-    joint_state_t abad;  // Hip abduction/adduction joint state
-    joint_state_t hip;   // Hip pitch joint state
-    joint_state_t knee;  // Knee joint state
-    joint_state_t foot;  // Foot state
+    joint_state_t abad; // Hip joint abduction/adduction state
+    joint_state_t hip;  // Hip joint pitch state
+    joint_state_t knee; // Knee joint state
+    joint_state_t foot; // Foot state
 } leg_state_t;
 ```
 
@@ -139,140 +101,121 @@ typedef struct leg_state_def {
 
 | Field Name | Type | Description |
 |--------|------|------|
-| abad   | joint_state_t | Hip abduction/adduction joint state |
-| hip    | joint_state_t | Hip pitch joint state |
-| knee   | joint_state_t | Knee joint state |
-| foot   | joint_state_t | Foot state |
+| abad   | joint_state_t | Hip joint abduction/adduction state parameters |
+| hip    | joint_state_t | Hip joint pitch state parameters |
+| knee   | joint_state_t | Knee joint state parameters |
+| foot   | joint_state_t | Foot state parameters |
 
 ---
 
-#### 1.1.7 Robot State
+### 1.2 Function Interface
 
-**Structure Prototype**
+#### 1.2.1 Create Leg Control Shared Memory
+
+**Function Prototype**
 ```cpp
-typedef struct robot_state_def {
-    leg_state_t legs[4];  // Leg states for four legs
-    imu_data_t imu;       // IMU data
-    uint32_t crc;         // CRC checksum
-    uint32_t counter;     // State counter
-} robot_state_t;
+static inline spline_data_p create_spline_shm(void);
 ```
 
-**Field Description**
+**Function Overview**
+Create shared memory for leg control and status.
 
-| Field Name | Type | Description |
+**Return Value**
+
+| Return Value | Description |
+|--------|------|
+| spline_data_p | Pointer to shared memory |
+
+**Remarks**
+
+- Shared memory path is `/spline_shm`.
+- Shared memory size is 10 KB.
+
+---
+
+#### 1.2.2 Destroy Leg Control Shared Memory
+
+**Function Prototype**
+```cpp
+static inline void destroy_spline_shm(spline_data_p ptr);
+```
+
+**Function Overview**
+Destroy shared memory for leg control and status.
+
+**Parameter Description**
+
+| Parameter Name | Type | Description |
 |--------|------|------|
-| legs   | leg_state_t[4] | Leg states for four legs (FR, FL, RR, RL) |
-| imu    | imu_data_t | IMU data |
-| crc    | uint32_t | CRC checksum |
-| counter| uint32_t | State counter |
+| ptr    | spline_data_p | Pointer to shared memory |
+
+**Remarks**
+
+- No need to explicitly unmap or delete shared memory in current implementation.
 
 ---
 
-### 1.2 Shared Memory Operations
-
-#### 1.2.1 Initialize Shared Memory
+#### 1.2.3 Create IMU Data Shared Memory
 
 **Function Prototype**
 ```cpp
-int lowlevel_init(void);
+static inline nav_imu_p create_imu_shm(void);
 ```
 
 **Function Overview**
-Initialize shared memory for communication with the robot
-
-**Parameter Description**
-
-None
+Create shared memory for IMU data.
 
 **Return Value**
 
 | Return Value | Description |
-|------|------|
-| 0    | Initialization successful |
-| -1   | Initialization failed |
+|--------|------|
+| nav_imu_p | Pointer to shared memory |
 
 **Remarks**
-Must be called before any other lowlevel functions
+
+- Shared memory path is `/imu_shm`.
+- Shared memory size is 1 KB.
 
 ---
 
-#### 1.2.2 Send Control Command
+#### 1.2.4 Destroy IMU Data Shared Memory
 
 **Function Prototype**
 ```cpp
-int lowlevel_send_cmd(const robot_cmd_t* cmd);
+static inline void destroy_imu_shm(nav_imu_p ptr);
 ```
 
 **Function Overview**
-Send control command to the robot
+Destroy shared memory for IMU data.
 
 **Parameter Description**
 
-| Parameter Name | Type | Description | Option | Remarks |
-|--------|------|------|---------|------|
-| cmd    | const robot_cmd_t* | Robot control command | Required | - |
-
-**Return Value**
-
-| Return Value | Description |
-|------|------|
-| 0    | Send successful |
-| -1   | Send failed |
+| Parameter Name | Type | Description |
+|--------|------|------|
+| ptr    | nav_imu_p | Pointer to shared memory |
 
 **Remarks**
-Control command coordinate system: robot forward is X, left is Y, vertical upward is Z
+
+- No need to explicitly unmap or delete shared memory in current implementation.
 
 ---
 
-#### 1.2.3 Receive Robot State
+### 1.3 Notes
 
-**Function Prototype**
-```cpp
-int lowlevel_recv_state(robot_state_t* state);
-```
+#### Shared Memory Management
+- Ensure shared memory is properly destroyed when the program exits.
+- Pay attention to synchronization issues when multiple processes access shared memory.
 
-**Function Overview**
-Receive robot state data
+#### Parameter Range
+- Parameters in `joint_control_t` (such as `kp`, `kd`) need to be set to reasonable ranges according to specific hardware characteristics.
+- Status values in `joint_state_t` (such as `p`, `v`, `t`) may be limited by hardware.
 
-**Parameter Description**
+#### Real-time Requirements
+- Shared memory update frequency is 1 ms, ensure consumers can process data in time.
 
-| Parameter Name | Type | Description | Option | Remarks |
-|--------|------|------|---------|------|
-| state  | robot_state_t* | Robot state data | Required | - |
-
-**Return Value**
-
-| Return Value | Description |
-|------|------|
-| 0    | Receive successful |
-| -1   | Receive failed |
-
-**Remarks**
-Leg order: Right front leg is leg 0, left front leg is leg 1, right rear leg is leg 2, left rear leg is leg 3
+#### Data Read/Write
+- CONSUMER_CONTROL is the status bit,
+    - When controlling, the consumer sets the status to 1, and the producer reads the data and sets the status to 0.
+    - When reading data, the producer sets the status to 1, and the consumer reads the data and sets the status to 0.
 
 ---
-
-#### 1.2.4 Close Shared Memory
-
-**Function Prototype**
-```cpp
-int lowlevel_close(void);
-```
-
-**Function Overview**
-Close shared memory connection
-
-**Parameter Description**
-
-None
-
-**Return Value**
-
-| Return Value | Description |
-|------|------|
-| 0    | Close successful |
-| -1   | Close failed |
-
-**Remarks**
-Should be called when the program exits to release resources

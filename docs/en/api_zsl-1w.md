@@ -67,7 +67,7 @@ Can be used as heartbeat detection
 **Function Prototype**
 
 ```cpp
-standUP()
+standUp()
 ```
 
 **Function Overview**
@@ -81,16 +81,11 @@ None
 
 | Return Value | Description |
 |------|------|
-| 0 | Enter state normal |
-| 0x3012 | Motor data lost |
-| 0x3010 | Motor disabled |
-| 0x3011 | Motor fault |
-| 0x3009 | Motor angle limit exceeded |
-| 0x3007 | State machine switching failed |
-| 0x3013 | Speed command too large |
+| 0 | Normal |
+| Others | Other error codes same as ZSL-1 |
 
 **Remarks**
-Robot dog stands normally, cannot directly enter this state during movement
+Cannot directly enter during movement
 
 ---
 
@@ -113,16 +108,11 @@ None
 
 | Return Value | Description |
 |------|------|
-| 0 | Enter state normal |
-| 0x3012 | Motor data lost |
-| 0x3010 | Motor disabled |
-| 0x3011 | Motor fault |
-| 0x3009 | Motor angle limit exceeded |
-| 0x3007 | State machine switching failed |
-| 0x3013 | Speed command too large |
+| 0 | Normal |
+| Others | Other error codes same as ZSL-1 |
 
 **Remarks**
-Robot dog lies down with joints locked, cannot directly enter this state during movement
+Cannot directly enter during movement
 
 ---
 
@@ -135,7 +125,7 @@ passive()
 ```
 
 **Function Overview**
-Control the robot dog to lie down in emergency
+Control the robot dog to enter passive mode
 
 **Parameter Description**
 
@@ -145,16 +135,11 @@ None
 
 | Return Value | Description |
 |------|------|
-| 0 | Enter state normal |
-| 0x3012 | Motor data lost |
-| 0x3010 | Motor disabled |
-| 0x3011 | Motor fault |
-| 0x3009 | Motor angle limit exceeded |
-| 0x3007 | State machine switching failed |
-| 0x3013 | Speed command too large |
+| 0 | Normal |
+| Others | Other error codes same as ZSL-1 |
 
 **Remarks**
-Robot dog enters passive state and lies down
+For emergency stop
 
 ---
 
@@ -167,133 +152,136 @@ move(float vx, float vy, float yaw_rate)
 ```
 
 **Function Overview**
-Control the robot dog movement
+Control the robot dog to move at speed
 
 **Parameter Description**
 
 | Parameter Name | Type | Description | Option | Remarks |
-|--------|------|------|---------|-----------|
-| vx | float | Forward speed | Required | When not moving, 0 needs to be passed in, range (-3m/s ~ -0.05m/s; 0.05m/s ~ 3m/s) |
-| vy | float | Lateral speed | Required | When not moving, 0 needs to be passed in, range (-1.0m/s ~ -0.1m/s;0.1m/s ~ 1.0m/s) |
-| yaw_rate | float | Angular velocity around Z-axis | Required | When not moving, 0 needs to be passed in, range (-3.0rad/s ~ -0.02rad/s;0.02rad/s ~ 3.0rad/s) |
+|--------|------|------|---------|----------|
+| vx | float | Forward speed m/s | Required | When not moving, 0 needs to be passed in, range (-3.7 ~ -0.05/0.05 ~ 3.7m/s) |
+| vy | float | Lateral speed m/s | Required | When not moving, 0 needs to be passed in, range (-1 ~ -0.1/0.1 ~ 1.0m/s) |
+| yaw_rate | float | Angular velocity around Z-axis rad/s | Required | When not moving, 0 needs to be passed in, range (-3 ~ -0.1/0.1 ~ 3.0 rad/s) |
 
 **Return Value Type: uint32_t**
 
 | Return Value | Description |
 |------|------|
-| 0 | Enter state normal |
-| 0x3012 | Motor data lost |
-| 0x3010 | Motor disabled |
-| 0x3011 | Motor fault |
-| 0x3009 | Motor angle limit exceeded |
-| 0x3007 | State machine switching failed |
-| 0x3013 | Speed command too large |
+| 0 | Normal |
+| Others | Other error codes same as ZSL-1 |
 
 **Remarks**
-Only enter when the robot dog is standing, control the dog to move at the specified speed.
+Must be called in standing state
 
 ---
 
-### 1.7 Jump
+### 1.7 Crawl
 
 **Function Prototype**
 
 ```cpp
-jump()
+crawl(float vx, float vy, float yaw_rate)
 ```
 
 **Function Overview**
-Control the robot dog to jump vertically
+Control the robot dog to crawl in low posture
+
+**Parameter Description**
+
+| Parameter Name | Type | Description | Option | Remarks |
+|--------|------|------|---------|----------|
+| vx | float | Forward speed m/s | Required | When not moving, 0 needs to be passed in, range (-3 ~ -0.1/0.1 ~ 3.0m/s) |
+| vy | float | Lateral speed m/s | Required | When not moving, 0 needs to be passed in, range (-0.5 ~ -0.1/0.1 ~ 0.5m/s) |
+| yaw_rate | float | Angular velocity around Z-axis rad/s | Required | When not moving, 0 needs to be passed in, range (-1 ~ -0.1/0.1 ~ 1.0 rad/s) |
+
+**Return Value Type: uint32_t**
+
+| Return Value | Description |
+|------|------|
+| 0 | Normal |
+| Others | Other error codes same as ZSL-1 |
+
+**Remarks**
+Similar to move, but uses crawling gait. Cannot enter this state during high-speed movement.
+
+---
+
+### 1.8 Climb
+
+**Function Prototype**
+
+```cpp
+climb(float vx, float vy, float yaw_rate)
+```
+
+**Function Overview**
+Control the robot dog to climb slopes or obstacles
+
+**Parameter Description**
+
+| Parameter Name | Type | Description | Option | Remarks |
+|--------|------|------|---------|----------|
+| vx | float | Forward speed m/s | Required | When not moving, 0 needs to be passed in, range (-1 ~ -0.1/0.1 ~ 1.0m/s) |
+| vy | float | Lateral speed m/s | Required | When not moving, 0 needs to be passed in, range (-1.0 ~ -0.1/0.1 ~ 1.0m/s) |
+| yaw_rate | float | Angular velocity around Z-axis rad/s | Required | When not moving, 0 needs to be passed in, range (-3.0 ~ -0.1/0.1 ~ 3.0 rad/s) |
+
+**Return Value Type: uint32_t**
+
+| Return Value | Description |
+|------|------|
+| 0 | Normal |
+
+**Remarks**
+Used for steep slope scenarios. Cannot enter this state during high-speed movement.
+
+---
+
+### 1.9 Cancel Crawl
+
+**Function Prototype**
+
+```cpp
+cancelCrawl()
+```
+
+**Function Overview**
+Exit crawl mode
 
 **Parameter Description**
 
 None
 
-**Return Value Type: uint32_t**
-
-| Return Value | Description |
-|------|------|
-| 0 | Enter state normal |
-| 0x3012 | Motor data lost |
-| 0x3010 | Motor disabled |
-| 0x3011 | Motor fault |
-| 0x3009 | Motor angle limit exceeded |
-| 0x3007 | State machine switching failed |
-| 0x3013 | Speed command too large |
+**Return Value**
+None
 
 **Remarks**
-Only enter when standing, cannot switch state during movement
+None
 
 ---
 
-### 1.8 Front Jump
+### 1.10 Cancel Climb
 
 **Function Prototype**
 
 ```cpp
-frontJump()
+cancelClimb()
 ```
 
 **Function Overview**
-Control the robot dog to jump forward
+Exit climbing mode
 
 **Parameter Description**
 
 None
 
-**Return Value Type: uint32_t**
-
-| Return Value | Description |
-|------|------|
-| 0 | Enter state normal |
-| 0x3012 | Motor data lost |
-| 0x3010 | Motor disabled |
-| 0x3011 | Motor fault |
-| 0x3009 | Motor angle limit exceeded |
-| 0x3007 | State machine switching failed |
-| 0x3013 | Speed command too large |
-
-**Remarks**
-Only enter when standing, cannot switch state during movement
-
----
-
-### 1.9 Backflip
-
-**Function Prototype**
-
-```cpp
-backflip()
-```
-
-**Function Overview**
-Control the robot dog to perform a backflip
-
-**Parameter Description**
-
+**Return Value**
 None
 
-**Return Value Type: uint32_t**
-
-| Return Value | Description |
-|------|------|
-| 0 | Enter state normal |
-| 0x3012 | Motor data lost |
-| 0x3010 | Motor disabled |
-| 0x3011 | Motor fault |
-| 0x3009 | Motor angle limit exceeded |
-| 0x3007 | State machine switching failed |
-| 0x3013 | Speed command too large |
-
 **Remarks**
-Only enter when standing, cannot switch state during movement
-This special function is designed for special scenarios such as media presentation and product demonstration.
-**Frequent use of this function will significantly accelerate the wear of core components such as motors and joints, which may cause product performance degradation or shortened service life.**
-Please use with caution.
+None
 
 ---
 
-### 1.10 Shake Hand
+### 1.11 Shake Hand
 
 **Function Prototype**
 
@@ -312,86 +300,14 @@ None
 
 | Return Value | Description |
 |------|------|
-| 0 | Enter state normal |
-| 0x3012 | Motor data lost |
-| 0x3010 | Motor disabled |
-| 0x3011 | Motor fault |
-| 0x3009 | Motor angle limit exceeded |
-| 0x3007 | State machine switching failed |
-| 0x3013 | Speed command too large |
+| 0 | Normal |
 
 **Remarks**
-Only enter when standing, cannot switch state during movement
-This special function is designed for special scenarios such as media presentation and product demonstration.
-**Frequent use of this function will significantly accelerate the wear of core components such as motors and joints, which may cause product performance degradation or shortened service life.**
-Please use with caution.
+Must be called in standing state
 
 ---
 
-### 1.11 Two-Leg Stand
-
-**Function Prototype**
-
-```cpp
-twoLegStand(float vx, float yaw_rate)
-```
-
-**Function Overview**
-Control the robot dog to stand on two legs
-
-**Parameter Description**
-
-| Parameter Name | Type | Description | Option | Remarks |
-|--------|------|------|---------|---------|
-| vx | float | Forward speed | Required | Pass in 0 when not moving, range (-0.5~-0.2 / 0.2~0.5m / s) |
-| yaw_rate | float | Angular velocity around Z-axis | Required | Pass in 0 when not moving, range (-1~-0.2 / 0.2~1.0rad / s) |
-
-**Return Value Type: uint32_t**
-
-| Return Value | Description |
-|------|------|
-| 0 | Enter state normal |
-| 0x3012 | Motor data lost |
-| 0x3010 | Motor disabled |
-| 0x3011 | Motor fault |
-| 0x3009 | Motor angle limit exceeded |
-| 0x3007 | State machine switching failed |
-| 0x3013 | Speed command too large |
-
-**Remarks**
-Only enter when standing, cannot enter this state during movement
-To exit two-leg stand state, call cancelTwoLegStand(), does not respond to other interfaces
-Movement can be controlled through parameters at the specified speed.
-This special function is designed for special scenarios such as media presentation and product demonstration.
-**Frequent use of this function will significantly accelerate the wear of core components such as motors and joints, which may cause product performance degradation or shortened service life.**
-Please use with caution.
-
----
-
-### 1.12 Exit Two-Leg Stand
-
-**Function Prototype**
-
-```cpp
-cancelTwoLegStand()
-```
-
-**Function Overview**
-Control the robot dog to exit two-leg stand
-
-**Parameter Description**
-
-None
-
-**Return Value**
-None
-
-**Remarks**
-Robot dog exits two-leg stand state, entered when robot dog is in two-leg stand state
-
----
-
-### 1.13 Attitude Control
+### 1.12 Attitude Control
 
 **Function Prototype**
 
@@ -400,35 +316,29 @@ attitudeControl(float roll_vel, float pitch_vel, float yaw_vel, float height_vel
 ```
 
 **Function Overview**
-Control the robot dog to twist in place and change body height
+Control body twisting and height changes
 
 **Parameter Description**
 
 | Parameter Name | Type | Description | Option | Remarks |
-|--------|------|------|---------|---------|
-| roll_vel | float | Angular velocity around X-axis | Required | Pass in 0 when not controlling, range (-0.5rad/s~0.5rad/s) |
-| pitch_vel | float | Angular velocity around Y-axis | Required | Pass in 0 when not controlling, range (-0.5rad/s~0.5rad/s) |
-| yaw_vel | float | Angular velocity around Z-axis | Required | Pass in 0 when not controlling, range (-0.5rad/s~0.5rad/s) |
-| height_vel | float | Vertical height velocity | Required | Pass in 0 when not controlling, range (-0.5m/s-0.5m/s) |
+|--------|------|------|---------|----------|
+| roll_vel | float | Angular velocity around X-axis | Required | When not controlling, pass in 0, range (-0.5rad/s~0.5rad/s) |
+| pitch_vel | float | Angular velocity around Y-axis | Required | When not controlling, pass in 0, range (-0.5rad/s~0.5rad/s) |
+| yaw_vel | float | Angular velocity around Z-axis | Required | When not controlling, pass in 0, range (-0.5rad/s~0.5rad/s) |
+| height_vel | float | Vertical height velocity | Required | When not controlling, pass in 0, range (-0.5m/s-0.5m/s) |
 
 **Return Value Type: uint32_t**
 
 | Return Value | Description |
 |------|------|
-| 0 | Enter state normal |
-| 0x3012 | Motor data lost |
-| 0x3010 | Motor disabled |
-| 0x3011 | Motor fault |
-| 0x3009 | Motor angle limit exceeded |
-| 0x3007 | State machine switching failed |
-| 0x3013 | Speed command too large |
+| 0 | Normal |
 
 **Remarks**
-Enter when robot dog is standing, control the dog to twist in place and change body height at the specified speed.
+Must be called in standing state
 
 ---
 
-### 1.14 Get Attitude Quaternion
+### 1.13 Get Attitude/Velocity/Position
 
 **Function Prototype**
 
@@ -437,7 +347,7 @@ getQuaternion()
 ```
 
 **Function Overview**
-Get the current attitude quaternion of the robot dog
+Get attitude quaternion
 
 **Parameter Description**
 
@@ -447,14 +357,12 @@ None
 
 | Return Value | Description |
 |------|------|
-| [w, x, y, z] | Vector containing 4 elements, corresponding to the four components of the quaternion respectively |
+| [w, x, y, z] | Quaternion |
 
 **Remarks**
-Robot dog forward is X, left is Y, vertical upward is Z
+None
 
 ---
-
-### 1.15 Get Attitude Euler Angles
 
 **Function Prototype**
 
@@ -463,7 +371,7 @@ getRPY()
 ```
 
 **Function Overview**
-Get the Euler angles (roll, pitch, yaw) of the current attitude of the robot dog
+Get Euler angles
 
 **Parameter Description**
 
@@ -473,14 +381,12 @@ None
 
 | Return Value | Description |
 |------|------|
-| [roll, pitch, yaw] | Vector containing 3 elements, unit is radians (rad), corresponding to the rotation angles around X, Y, Z axes respectively |
+| [roll, pitch, yaw] | Euler angles, unit rad |
 
 **Remarks**
-Robot dog forward is X, left is Y, vertical upward is Z
+None
 
 ---
-
-### 1.16 Get Acceleration
 
 **Function Prototype**
 
@@ -489,7 +395,7 @@ getBodyAcc()
 ```
 
 **Function Overview**
-Get the acceleration data of the robot dog body (body coordinate system)
+Get body acceleration
 
 **Parameter Description**
 
@@ -499,14 +405,12 @@ None
 
 | Return Value | Description |
 |------|------|
-| [ax, ay, az] | Vector containing 3 elements, unit is m/s², corresponding to the acceleration in X, Y, Z axis directions respectively |
+| [ax, ay, az] | Unit m/s² |
 
 **Remarks**
-Robot dog forward is X, left is Y, vertical upward is Z
+None
 
 ---
-
-### 1.17 Get Angular Velocity
 
 **Function Prototype**
 
@@ -515,7 +419,7 @@ getBodyGyro()
 ```
 
 **Function Overview**
-Get the angular velocity data of the robot dog body (body coordinate system)
+Get body angular velocity
 
 **Parameter Description**
 
@@ -525,14 +429,12 @@ None
 
 | Return Value | Description |
 |------|------|
-| [gx, gy, gz] | Vector containing 3 elements, unit is rad/s, corresponding to the angular velocity in X, Y, Z axis directions respectively |
+| [gx, gy, gz] | Unit rad/s |
 
 **Remarks**
-Robot dog forward is X, left is Y, vertical upward is Z
+None
 
 ---
-
-### 1.18 Get Origin Coordinate Position
 
 **Function Prototype**
 
@@ -541,7 +443,7 @@ getPosition()
 ```
 
 **Function Overview**
-Get the position coordinates of the robot dog in the power-on origin coordinate system
+Get body position
 
 **Parameter Description**
 
@@ -551,14 +453,12 @@ None
 
 | Return Value | Description |
 |------|------|
-| [x, y, z] | Vector containing 3 elements, unit is meter (m), representing the current position |
+| [x, y, z] | Body position, unit m |
 
 **Remarks**
-Robot dog forward is X, left is Y, vertical upward is Z
+None
 
 ---
-
-### 1.19 Get Origin Coordinate Velocity
 
 **Function Prototype**
 
@@ -567,7 +467,7 @@ getWorldVelocity()
 ```
 
 **Function Overview**
-Get the movement speed of the robot dog in the power-on origin coordinate system
+Get body velocity in world coordinate system
 
 **Parameter Description**
 
@@ -577,14 +477,12 @@ None
 
 | Return Value | Description |
 |------|------|
-| [vx, vy, vz] | Vector containing 3 elements, unit is meter/second (m/s), corresponding to the speed in X, Y, Z axis directions of the power-on origin coordinate system respectively |
+| [vx, vy, vz] | Body linear velocity, unit m/s |
 
 **Remarks**
-Robot dog forward is X, left is Y, vertical upward is Z
+None
 
 ---
-
-### 1.20 Get Self-Movement Velocity
 
 **Function Prototype**
 
@@ -593,7 +491,7 @@ getBodyVelocity()
 ```
 
 **Function Overview**
-Get the movement speed of the robot dog in the body coordinate system
+Get body velocity in body coordinate system
 
 **Parameter Description**
 
@@ -603,14 +501,14 @@ None
 
 | Return Value | Description |
 |------|------|
-| [vx, vy, vz] | Vector containing 3 elements, unit is m/s, corresponding to the speed in X, Y, Z axis directions of the body coordinate system respectively |
+| [vx, vy, vz] | Body linear velocity, unit m/s |
 
 **Remarks**
-Robot dog forward is X, left is Y, vertical upward is Z
+None
 
 ---
 
-### 1.21 Get Battery Power
+### 1.14 Get Battery Power
 
 **Function Prototype**
 
@@ -619,7 +517,7 @@ getBatteryPower()
 ```
 
 **Function Overview**
-Get robot dog battery power
+Get battery power
 
 **Parameter Description**
 
@@ -629,14 +527,14 @@ None
 
 | Return Value | Description |
 |------|------|
-| 0-100 | Range: 0-100 |
+| 0-100 | Battery power percentage |
 
 **Remarks**
-Return value range 0-100, 0 is no power, 100 is full power
+None
 
 ---
 
-### 1.22 Get Control Mode
+### 1.15 Get Control Mode
 
 **Function Prototype**
 
@@ -645,7 +543,7 @@ getCurrentCtrlmode()
 ```
 
 **Function Overview**
-Get the current control mode of the robot dog
+Get current robot dog control state
 
 **Parameter Description**
 
@@ -655,80 +553,30 @@ None
 
 | Return Value | Description |
 |------|------|
-| 0 | Device lies down, motor enters damping state |
-| 1 | Standing state/shake hand state |
-| 10 | Device lies down, after a short time motor enters free state |
-| 18 | Movement state |
-| 21 | Action state (attitude mode, jump mode, two-leg stand, etc.) |
-| 51 | Lying state |
+| 0 | Damping mode |
+| 1 | Standing mode |
+| 3 | Movement mode |
 
 **Remarks**
-The returned state is the last state executed by the device. If an action is executed without receiving a movement command, the returned state will always be the action state.
+None
 
 ---
 
-### 1.23 Get Abad Joint Angles
+### 1.16 Joint Information Acquisition
+
+#### 1.16.1 Get Joint Angles
 
 **Function Prototype**
 
 ```cpp
 getLegAbadJoint()
-```
-
-**Function Overview**
-Get the current angles of the hip abduction/adduction joints (Abad Joint) of each leg
-
-**Parameter Description**
-
-None
-
-**Return Value Type: vector**
-
-| Return Value | Description |
-|------|------|
-| [FR, FL, RR, RL] | Vector containing 4 elements, corresponding to the Abad joint angles of right front, left front, right rear, left rear respectively (unit: rad) |
-
-**Remarks**
-Unit rad, robot dog body forward is X, left is Y, vertical upward is Z
-
----
-
-### 1.24 Get Hip Joint Angles
-
-**Function Prototype**
-
-```cpp
 getLegHipJoint()
-```
-
-**Function Overview**
-Get the current angles of the hip pitch joints (Hip Joint) of each leg
-
-**Parameter Description**
-
-None
-
-**Return Value Type: vector**
-
-| Return Value | Description |
-|------|------|
-| [FR, FL, RR, RL] | Vector containing 4 elements, corresponding to the Hip joint angles of right front, left front, right rear, left rear respectively (unit: rad) |
-
-**Remarks**
-Unit rad, robot dog body forward is X, left is Y, vertical upward is Z
-
----
-
-### 1.25 Get Knee Joint Angles
-
-**Function Prototype**
-
-```cpp
 getLegKneeJoint()
+getLegFootJoint()
 ```
 
 **Function Overview**
-Get the current angles of the knee joints (Knee Joint) of each leg
+Get joint angle values
 
 **Parameter Description**
 
@@ -738,75 +586,29 @@ None
 
 | Return Value | Description |
 |------|------|
-| [FR, FL, RR, RL] | Vector containing 4 elements, corresponding to the Knee joint angles of right front, left front, right rear, left rear respectively (unit: rad) |
+| [FR, FL, RR, RL] | Joint angles of each leg, unit rad |
 
 **Remarks**
-Unit rad, robot dog body forward is X, left is Y, vertical upward is Z
+- LegAbadJoint corresponds to hip joint abduction/adduction direction
+- LegHipJoint corresponds to hip joint hip direction  
+- LegKneeJoint corresponds to knee joint
+- LegFootJoint corresponds to foot joint
 
 ---
 
-### 1.26 Get Angular Velocity of Abad Joints
+#### 1.16.2 Get Joint Velocities
 
 **Function Prototype**
 
 ```cpp
 getLegAbadJointVel()
-```
-
-**Function Overview**
-Get the current angular velocity of Abad joints of each leg
-
-**Parameter Description**
-
-None
-
-**Return Value Type: vector**
-
-| Return Value | Description |
-|------|------|
-| [FR, FL, RR, RL] | Vector containing 4 elements, unit is rad/s, corresponding to the joint angles of right front, left front, right rear, left rear respectively |
-
-**Remarks**
-Unit rad/s, robot dog body forward is X, left is Y, vertical upward is Z
-
----
-
-### 1.27 Get Hip Joint Angular Velocity
-
-**Function Prototype**
-
-```cpp
 getLegHipJointVel()
-```
-
-**Function Overview**
-Get the current angular velocity of Hip joints of each leg
-
-**Parameter Description**
-
-None
-
-**Return Value Type: vector**
-
-| Return Value | Description |
-|------|------|
-| [FR, FL, RR, RL] | Vector containing 4 elements, unit is rad/s, corresponding to the joint angles of right front, left front, right rear, left rear respectively |
-
-**Remarks**
-Unit rad/s, robot dog body forward is X, left is Y, vertical upward is Z
-
----
-
-### 1.28 Get Knee Joint Angular Velocity
-
-**Function Prototype**
-
-```cpp
 getLegKneeJointVel()
+getLegFootJointVel()
 ```
 
 **Function Overview**
-Get the current angular velocity of Knee joints of each leg
+Get joint velocity values
 
 **Parameter Description**
 
@@ -816,75 +618,29 @@ None
 
 | Return Value | Description |
 |------|------|
-| [FR, FL, RR, RL] | Vector containing 4 elements, unit is rad/s, corresponding to the joint angles of right front, left front, right rear, left rear respectively |
+| [FR, FL, RR, RL] | Joint velocities of each leg, unit rad/s |
 
 **Remarks**
-Unit rad/s, robot dog body forward is X, left is Y, vertical upward is Z
+- LegAbadJointVel corresponds to hip joint abduction/adduction direction
+- LegHipJointVel corresponds to hip joint hip direction  
+- LegKneeJointVel corresponds to knee joint
+- LegFootJointVel corresponds to foot joint
 
 ---
 
-### 1.29 Get Abad Joint Torque
+#### 1.16.3 Get Joint Torques
 
 **Function Prototype**
 
 ```cpp
 getLegAbadJointTorque()
-```
-
-**Function Overview**
-Get the current output torque of Abad joints of each leg
-
-**Parameter Description**
-
-None
-
-**Return Value Type: vector**
-
-| Return Value | Description |
-|------|------|
-| [FR, FL, RR, RL] | Vector containing 4 elements, unit usually N・m, corresponding order same as joint torque |
-
-**Remarks**
-Unit usually N・m, corresponding to the Abad joint torque of right front, left front, right rear, left rear respectively
-
----
-
-### 1.30 Get Hip Joint Torque
-
-**Function Prototype**
-
-```cpp
 getLegHipJointTorque()
-```
-
-**Function Overview**
-Get the current output torque of Hip joints of each leg
-
-**Parameter Description**
-
-None
-
-**Return Value Type: vector**
-
-| Return Value | Description |
-|------|------|
-| [FR, FL, RR, RL] | Vector containing 4 elements, unit usually N・m, corresponding order same as joint torque |
-
-**Remarks**
-Unit usually N・m, corresponding to the Hip joint torque of right front, left front, right rear, left rear respectively
-
----
-
-### 1.31 Get Knee Joint Torque
-
-**Function Prototype**
-
-```cpp
 getLegKneeJointTorque()
+getLegFootJointTorque()
 ```
 
 **Function Overview**
-Get the current output torque of Knee joints of each leg
+Get joint torque values
 
 **Parameter Description**
 
@@ -894,42 +650,11 @@ None
 
 | Return Value | Description |
 |------|------|
-| [FR, FL, RR, RL] | Vector containing 4 elements, unit usually N・m, corresponding order same as joint torque |
+| [FR, FL, RR, RL] | Joint torques of each leg, unit N·m |
 
 **Remarks**
-Unit usually N・m, corresponding to the Knee joint torque of right front, left front, right rear, left rear respectively
 
----
-
-### 1.32 Climb Stairs
-
-**Function Prototype**
-
-```cpp
-climbStairs()
-```
-
-**Function Overview**
-Control the robot dog to climb stairs
-
-**Parameter Description**
-
-None
-
-**Return Value Type: uint32_t**
-
-| Return Value | Description |
-|------|------|
-| 0 | Enter state normal |
-| 0x3012 | Motor data lost |
-| 0x3010 | Motor disabled |
-| 0x3011 | Motor fault |
-| 0x3009 | Motor angle limit exceeded |
-| 0x3007 | State machine switching failed |
-| 0x3013 | Speed command too large |
-
-**Remarks**
-Only enter when standing, cannot switch state during movement
-This special function is designed for special scenarios such as media presentation and product demonstration.
-**Frequent use of this function will significantly accelerate the wear of core components such as motors and joints, which may cause product performance degradation or shortened service life.**
-Please use with caution.
+- LegAbadJointTorque corresponds to hip joint abduction/adduction direction
+- LegHipJointTorque corresponds to hip joint hip direction  
+- LegKneeJointTorque corresponds to knee joint
+- LegFootJointTorque corresponds to foot joint

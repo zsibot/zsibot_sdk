@@ -13,7 +13,7 @@ This class contains methods for controlling the quadruped robot application func
 **Function Prototype**
 
 ```cpp
-initRobot(const std::string& local_ip, const int local_port, const std::string& dog_ip = "192.168.234.1")
+initRobot(local_ip, local_port, dog_ip)
 ```
 
 **Function Overview**
@@ -343,8 +343,8 @@ Control the robot dog to stand on two legs
 
 | Parameter Name | Type | Description | Option | Remarks |
 |--------|------|------|---------|---------|
-| vx | float | Forward speed | Required | Pass in 0 when not moving, range (-0.5~-0.2 / 0.2~0.5m / s) |
-| yaw_rate | float | Angular velocity around Z-axis | Required | Pass in 0 when not moving, range (-1~-0.2 / 0.2~1.0rad / s)
+| vx | float | Forward speed | Required | When not moving, pass in 0, range (-0.5~-0.2 / 0.2~0.5m / s) |
+| yaw_rate | float | Angular velocity around Z-axis | Required | When not moving, pass in 0, range (-1~-0.2 / 0.2~1.0rad / s) |
 
 **Return Value Type: uint32_t**
 
@@ -406,10 +406,10 @@ Control the robot dog to twist in place and change body height
 
 | Parameter Name | Type | Description | Option | Remarks |
 |--------|------|------|---------|---------|
-| roll_vel | float | Angular velocity around X-axis | Required | Pass in 0 when not controlling, range (-0.5rad/s~0.5rad/s) |
-| pitch_vel | float | Angular velocity around Y-axis | Required | Pass in 0 when not controlling, range (-0.5rad/s~0.5rad/s) |
-| yaw_vel | float | Angular velocity around Z-axis | Required | Pass in 0 when not controlling, range (-0.5rad/s~0.5rad/s) |
-| height_vel | float | Vertical height velocity | Required | Pass in 0 when not controlling, range (-0.5m/s-0.5m/s) |
+| roll_vel | float | Angular velocity around X-axis | Required | When not controlling, pass in 0, range (-0.5rad/s~0.5rad/s) |
+| pitch_vel | float | Angular velocity around Y-axis | Required | When not controlling, pass in 0, range (-0.5rad/s~0.5rad/s) |
+| yaw_vel | float | Angular velocity around Z-axis | Required | When not controlling, pass in 0, range (-0.5rad/s~0.5rad/s) |
+| height_vel | float | Vertical height velocity | Required | When not controlling, pass in 0, range (-0.5m/s-0.5m/s) |
 
 **Return Value Type: uint32_t**
 
