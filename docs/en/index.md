@@ -4,7 +4,7 @@ Welcome to the ZsiBot SDK for secondary development.
 
 ## Quick Start
 
-1. Select your model: `ZSL-1` / `ZSL-1w` / `ZSM-1w`
+1. Select your model: `ZSL-1` / `ZSL-1w` /
 2. Navigate to the `demo/<model>/` directory according to your model and run the examples
 3. Read [Deployment and Operation](deploy.md) to complete integration
 4. Check [Architecture and Directory Structure](architecture.md) to understand module relationships

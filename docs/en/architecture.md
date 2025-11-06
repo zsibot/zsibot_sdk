@@ -18,8 +18,6 @@
 │  │  └─ lowlevel.h
 │  ├─ zsl-1w/
 │  │  └─ highlevel.h
-│  ├─ zsm-1w/
-│  │  └─ highlevel.h
 │  ├─ lowlevel/
 │  │  └─ lowlevel.h
 ├─ lib/
@@ -29,9 +27,6 @@
 │  ├─ zsl-1w/
 │  │  ├─ aarch64/
 │  │  └─ x86_64/
-│  └─ zsm-1w/
-│     ├─ aarch64/
-│     └─ x86_64/
 
 ```
 
@@ -40,7 +35,7 @@ Key directory descriptions:
 - `include/`: Header files (public headers and model-specific headers)
     - `include/zsl-1/highlevel.h`, `include/zsl-1/lowlevel.h`
     - `include/zsl-1w/highlevel.h`
-    - `include/zsm-1w/highlevel.h`
+    <!-- - `include/zsm-1w/highlevel.h` -->
 
 - `lib/`: Compiled runtime libraries (separated by model and architecture)
     - `lib/<model>/<arch>/libmc_sdk_<model>_<arch>.so`
@@ -49,7 +44,7 @@ Key directory descriptions:
 - `demo/`: Sample programs (C++ / Python)
     - `demo/zsl-1/cpp`, `demo/zsl-1/python/examples`
     - `demo/zsl-1w/cpp`, `demo/zsl-1w/python/examples`
-    - **Note**: The current repository does not provide `zsm-1w` demos, refer to `zsl-1w` examples for migration
+    <!-- - **Note**: The current repository does not provide `zsm-1w` demos, refer to `zsl-1w` examples for migration -->
 - Other: `CMakeLists.txt`, `build.sh`, `README.md`, etc.
 
 ## ZsiBot System Architecture

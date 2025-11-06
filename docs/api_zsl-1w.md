@@ -13,7 +13,7 @@
 **函数原型**
 
 ```cpp
-initRobot(const std::string& local_ip, const int local_port, const std::string& dog_ip = "192.168.234.1")
+initRobot(local_ip, local_port, dog_ip)
 ```
 
 **功能概述**

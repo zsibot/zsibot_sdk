@@ -18,8 +18,6 @@
 │  │  └─ lowlevel.h
 │  ├─ zsl-1w/
 │  │  └─ highlevel.h
-│  ├─ zsm-1w/
-│  │  └─ highlevel.h
 │  ├─ lowlevel/
 │  │  └─ lowlevel.h
 ├─ lib/
@@ -29,9 +27,6 @@
 │  ├─ zsl-1w/
 │  │  ├─ aarch64/
 │  │  └─ x86_64/
-│  └─ zsm-1w/
-│     ├─ aarch64/
-│     └─ x86_64/
 
 ```
 
@@ -40,7 +35,7 @@
 - `include/`：头文件（公共头与机型专属头）
     - `include/zsl-1/highlevel.h`、`include/zsl-1/lowlevel.h`
     - `include/zsl-1w/highlevel.h`
-    - `include/zsm-1w/highlevel.h`
+    <!-- - `include/zsm-1w/highlevel.h` -->
 
 - `lib/`：已编译的运行库（按机型与架构区分）
     - `lib/<model>/<arch>/libmc_sdk_<model>_<arch>.so`
@@ -49,7 +44,7 @@
 - `demo/`：示例程序（C++ / Python）
     - `demo/zsl-1/cpp`、`demo/zsl-1/python/examples`
     - `demo/zsl-1w/cpp`、`demo/zsl-1w/python/examples`
-    - **注意**：当前仓库未提供 `zsm-1w` 的 demo，可参考 `zsl-1w` 示例迁移
+    <!-- - **注意**：当前仓库未提供 `zsm-1w` 的 demo，可参考 `zsl-1w` 示例迁移 -->
 - 其他：`CMakeLists.txt`、`build.sh`、`README.md` 等
 
 ## ZsiBot 系统架构

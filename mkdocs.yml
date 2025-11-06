@@ -51,7 +51,7 @@ theme:
   
     # 其他功能
     - toc.follow                # 目录跟随
-    - toc.integrate             # 集成目录
+    # - toc.integrate             # 集成目录
   # 字体配置
   font:
     text: Roboto
@@ -131,10 +131,10 @@ nav:
   - Deploy: deploy.md
   - Architecture: architecture.md
   - Interface:
-    - api.md
+    # - api.md
     - zsl-1 API: api_zsl-1.md
     - zsl-1w API: api_zsl-1w.md
-    - zsm-1w API: api_zsm-1w.md
+    # - zsm-1w API: api_zsm-1w.md
     # - dog task API: api_dog_task.md
     - lowlevel API: api_lowlevel.md
   - Videos: video.md

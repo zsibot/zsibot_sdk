@@ -69,8 +69,8 @@ sudo systemctl disable networkmanager-cleanup.service   //禁用网络清除服�
 
 ## 常见问题（FAQ）
 
-**Q: Demo 里没有 zsm-1w？**  
-A: 当前仓库未提供 zsm-1w 官方 demo。可参考 `zsl-1w` 示例快速迁移：替换库路径与头文件，即可跑通。
+<!-- **Q: Demo 里没有 zsm-1w？**   -->
+<!-- A: 当前仓库未提供 zsm-1w 官方 demo。可参考 `zsl-1w` 示例快速迁移：替换库路径与头文件，即可跑通。 -->
 
 **Q: Python 导入失败？**  
 A: 确认脚本是否将 `lib/<model>/<arch>` 加入 `sys.path`；Python 版本需与扩展模块匹配（`cp310` 表示 Python 3.10）。

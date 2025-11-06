@@ -69,8 +69,8 @@ The following situations may cause the gamepad to be unable to control, and trou
 
 ## Frequently Asked Questions (FAQ)
 
-**Q: Demo doesn't have zsm-1w?**  
-A: The current repository does not provide official zsm-1w demos. You can quickly migrate by referring to the `zsl-1w` example: replace the library path and header file to get it working.
+<!-- **Q: Demo doesn't have zsm-1w?**   -->
+<!-- A: The current repository does not provide official zsm-1w demos. You can quickly migrate by referring to the `zsl-1w` example: replace the library path and header file to get it working. -->
 
 **Q: Python import failed?**  
 A: Confirm whether the script adds `lib/<model>/<arch>` to `sys.path`; the Python version needs to match the extension module (e.g., `cp310` indicates Python 3.10).

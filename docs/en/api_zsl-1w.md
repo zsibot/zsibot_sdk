@@ -13,7 +13,7 @@ This class contains methods for controlling the ZSL-1w robot dog application fun
 **Function Prototype**
 
 ```cpp
-initRobot(const std::string& local_ip, const int local_port, const std::string& dog_ip = "192.168.234.1")
+initRobot(local_ip, local_port, dog_ip)
 ```
 
 **Function Overview**
