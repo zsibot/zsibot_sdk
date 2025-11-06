@@ -35,6 +35,9 @@ jobs:
       - name: Install dependencies
         run: pip install mkdocs mkdocs-material
 
+      - name: Install mkdocs-static-i18n plugin
+        run: pip install mkdocs-static-i18n
+
       - name: Build documentation
         run: mkdocs build --site-dir ./_site
 

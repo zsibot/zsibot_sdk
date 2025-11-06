@@ -9,6 +9,7 @@ repo_name: your-username/your-repo-name
 # 在这里配置 mkdocs-material 主题
 theme:
   name: material
+  language: zh
   
   # 调色板配置
   palette:
@@ -109,12 +110,27 @@ markdown_extensions:
 # 插件
 plugins:
   - search
+  # static i18n plugin configuration
+  - i18n:
+      # docs are organized in folders per locale (docs/, docs/en/, docs/zh_backup/)
+      docs_structure: folder
+      # whether to fallback to default language when a translation is missing
+      fallback_to_default: true
+      # 语言映射：key 必须与 docs 下的目录名一致
+      languages:
+        - locale: zh
+          name: 中文
+          default: true
+          build: true
+        - locale: en
+          name: English
+          build: true
 nav:
   - Home: index.md
   - Downloads: sdk_download.md
   - Deploy: deploy.md
   - Architecture: architecture.md
-  - Interface: 
+  - Interface:
     - api.md
     - zsl-1 API: api_zsl-1.md
     - zsl-1w API: api_zsl-1w.md

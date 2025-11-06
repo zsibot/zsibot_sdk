@@ -15,7 +15,8 @@ error async receive from
 ```
 
 1. 请按照文档[修改SDK配置文件中](deploy.md#22-sdk)target_ip参数。
-2. 若与设备通讯采用非WiFi直连，还需按照文档[修改SDK_CLIENT_IP](deploy.md#23-sdk_client_ip)参数。非WiFi直连时，设备会有概率出现运控绑定SDK失败，请按照文档[运控绑定IP失败](#2-ip)参数。
+2. 若与设备通讯采用非WiFi直连，还需按照文档[修改SDK_CLIENT_IP](deploy.md#23-sdk_client_ip)参数。
+3. 非WiFi直连时，设备会有概率出现运控绑定SDK失败，请按照文档[运控绑定IP失败](#2-ip)参数。
 
 !!! warning "参数配置后需进行重启设备生效！"
     
