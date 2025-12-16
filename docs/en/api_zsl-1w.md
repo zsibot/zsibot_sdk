@@ -205,37 +205,7 @@ Similar to move, but uses crawling gait. Cannot enter this state during high-spe
 
 ---
 
-### 1.8 Climb
-
-**Function Prototype**
-
-```cpp
-climb(float vx, float vy, float yaw_rate)
-```
-
-**Function Overview**
-Control the robot dog to climb slopes or obstacles
-
-**Parameter Description**
-
-| Parameter Name | Type | Description | Option | Remarks |
-|--------|------|------|---------|----------|
-| vx | float | Forward speed m/s | Required | When not moving, 0 needs to be passed in, range (-1 ~ -0.1/0.1 ~ 1.0m/s) |
-| vy | float | Lateral speed m/s | Required | When not moving, 0 needs to be passed in, range (-1.0 ~ -0.1/0.1 ~ 1.0m/s) |
-| yaw_rate | float | Angular velocity around Z-axis rad/s | Required | When not moving, 0 needs to be passed in, range (-3.0 ~ -0.1/0.1 ~ 3.0 rad/s) |
-
-**Return Value Type: uint32_t**
-
-| Return Value | Description |
-|------|------|
-| 0 | Normal |
-
-**Remarks**
-Used for steep slope scenarios. Cannot enter this state during high-speed movement.
-
----
-
-### 1.9 Cancel Crawl
+### 1.8 Cancel Crawl
 
 **Function Prototype**
 
@@ -258,30 +228,7 @@ None
 
 ---
 
-### 1.10 Cancel Climb
-
-**Function Prototype**
-
-```cpp
-cancelClimb()
-```
-
-**Function Overview**
-Exit climbing mode
-
-**Parameter Description**
-
-None
-
-**Return Value**
-None
-
-**Remarks**
-None
-
----
-
-### 1.11 Shake Hand
+### 1.9 Shake Hand
 
 **Function Prototype**
 
@@ -307,7 +254,7 @@ Must be called in standing state
 
 ---
 
-### 1.12 Attitude Control
+### 1.10 Attitude Control
 
 **Function Prototype**
 
@@ -338,7 +285,7 @@ Must be called in standing state
 
 ---
 
-### 1.13 Get Attitude/Velocity/Position
+### 1.11 Get Attitude/Velocity/Position
 
 **Function Prototype**
 
@@ -508,7 +455,7 @@ None
 
 ---
 
-### 1.14 Get Battery Power
+### 1.12 Get Battery Power
 
 **Function Prototype**
 
@@ -534,7 +481,7 @@ None
 
 ---
 
-### 1.15 Get Control Mode
+### 1.13 Get Control Mode
 
 **Function Prototype**
 
@@ -562,9 +509,9 @@ None
 
 ---
 
-### 1.16 Joint Information Acquisition
+### 1.14 Joint Information Acquisition
 
-#### 1.16.1 Get Joint Angles
+#### 1.14.1 Get Joint Angles
 
 **Function Prototype**
 
@@ -596,7 +543,7 @@ None
 
 ---
 
-#### 1.16.2 Get Joint Velocities
+#### 1.14.2 Get Joint Velocities
 
 **Function Prototype**
 
@@ -628,7 +575,7 @@ None
 
 ---
 
-#### 1.16.3 Get Joint Torques
+#### 1.14.3 Get Joint Torques
 
 **Function Prototype**
 

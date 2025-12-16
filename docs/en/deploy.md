@@ -32,7 +32,7 @@ The wireless network is equipped with DHCP service. After connecting to the wire
 
 The wired network does not have DHCP service. After connecting via cable, you need to configure a fixed IP on the operating device's wired network, and the IP should be in the 168 subnet to establish communication with the robot.
 
-If the robot's IP changes, you need to configure [SDK_CLIENT_IP](#23-sdk_client_ip)
+If the robot's IP changes, you need to configure [SDK_CLIENT_IP](#23-configure-sdk_client_ip)
 
 ---
 
@@ -96,12 +96,12 @@ cd /opt/export/mc/bin && taskset -c 7 ./mc_ctrl r
 
 In the above code line 27, add the corresponding configuration: `export SDK_CLIENT_IP="robot new ip"`, and fill in the robot's IP address in the corresponding parameter. If using wired network, change the robot's new IP to 192.168.168.168, or modify to the corresponding IP if it's another IP.
 
-!!! danger "The IP configured in [target_ip](#22-sdk) and [SDK_CLIENT_IP](#23-sdk_client_ip) must be in the same subnet!"
+!!! danger "The IP configured in [target_ip](#22-modify-sdk-configuration-file) and [SDK_CLIENT_IP](#23-configure-sdk_client_ip) must be in the same subnet!"
 
 !!! warning "Parameters need to be restarted to take effect after configuration!"
 
 !!! danger "There is a probability that configuring this parameter will cause the robot to be unable to use the remote controller!"
-    After configuring SDK_CLIENT_IP, if the device's network is not initialized after booting and the corresponding network card is not assigned an IP address, causing the motion control program to fail to bind the IP address, the robot will not be able to use the remote controller. [Solution](faq.md#2-ip)
+    After configuring SDK_CLIENT_IP, if the device's network is not initialized after booting and the corresponding network card is not assigned an IP address, causing the motion control program to fail to bind the IP address, the robot will not be able to use the remote controller. [Solution](faq.md#2-motion-control-binding-ip-failure)
 
 ---
 
@@ -120,7 +120,7 @@ std::string CLIENT_IP = "192.168.234.15"; // Local IP address
 ```python
 app.initRobot("192.168.234.15",43988, "192.168.234.1") # (Local IP, Local Port, Robot IP)
 ``` 
-!!! warning "The robot IP and local port in the configuration parameters must be consistent with the target_ip and target_port parameters in [sdk_config](#22-sdk)."
+!!! warning "The robot IP and local port in the configuration parameters must be consistent with the target_ip and target_port parameters in [sdk_config](#22-modify-sdk-configuration-file)."
     
 !!! warning "Please ensure that the robot IP and port number match, otherwise communication cannot be established!"
 

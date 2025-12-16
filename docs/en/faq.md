@@ -14,9 +14,9 @@ connect time out
 error async receive from
 ```
 
-1. Please follow the document [Modify SDK Configuration File](deploy.md#22-sdk) target_ip parameter.
-2. If non-WiFi direct connection is used for communication with the device, you also need to follow the document [Modify SDK_CLIENT_IP](deploy.md#23-sdk_client_ip) parameter.
-3. When using non-WiFi direct connection, there is a probability that the motion control binding SDK will fail. Please follow the document [Motion Control Binding IP Failure](#2-ip) parameter.
+1. Please follow the document [Modify SDK Configuration File](deploy.md#22-modify-sdk-configuration-file) target_ip parameter.
+2. If non-WiFi direct connection is used for communication with the device, you also need to follow the document [Modify SDK_CLIENT_IP](deploy.md#23-configure-sdk_client_ip) parameter.
+3. When using non-WiFi direct connection, there is a probability that the motion control binding SDK will fail. Please follow the document [Motion Control Binding IP Failure](#2-motion-control-binding-ip-failure) parameter.
 
 !!! warning "Parameters need to be restarted to take effect after configuration!"
     
@@ -62,7 +62,7 @@ sudo systemctl disable networkmanager-cleanup.service   //Disable network cleanu
 The following situations may cause the gamepad to be unable to control, and troubleshooting is needed based on the situation
 
 1. Motion control program not started
-    - If [ROBOT_NET_INTERFACES](faq.md#2-ip) is configured, the program will detect whether the configured network card is assigned an IP when the device starts. If the network card never gets an IP, the motion control program cannot start. You need to ensure that the configured network interface is always assigned an IP.
+    - If [ROBOT_NET_INTERFACES](#2-motion-control-binding-ip-failure) is configured, the program will detect whether the configured network card is assigned an IP when the device starts. If the network card never gets an IP, the motion control program cannot start. You need to ensure that the configured network interface is always assigned an IP.
 2. SDK program is running
     - SDK control has higher priority than the gamepad program. When the SDK program is running, the gamepad remote controller will not be able to control the device.
 
@@ -103,7 +103,7 @@ A: The IMU data obtained is raw data.
 A: The IMU data inside the device body is affected by product model, and accuracy may have errors. If higher precision IMU is required, a high-precision IMU needs to be purchased separately for use on the upper body.
 
 **Q: After using SDK control, when using gamepad remote control to control the device, why does the device do 'push-ups' in place after sending the stand command?**  
-A: If the [SDK_CLIENT_IP](deploy.md#23-sdk_client_ip) parameter is configured, the motion control will bind the corresponding IP at startup. If the IP does not exist, this phenomenon will occur.  
+A: If the [SDK_CLIENT_IP](deploy.md#23-configure-sdk_client_ip) parameter is configured, the motion control will bind the corresponding IP at startup. If the IP does not exist, this phenomenon will occur.  
 
 **Q: What is the rotation order when converting quaternions to Euler angles?**  
 A: The Euler angle order is ZYX, i.e., first rotate around the Z-axis, then the Y-axis, and finally the X-axis.
@@ -112,7 +112,7 @@ A: The Euler angle order is ZYX, i.e., first rotate around the Z-axis, then the 
 A: Highlevel and Lowlevel cannot be used simultaneously, and when switching between the two interfaces, a certain amount of time should be reserved for the device port to be released.
 
 **Q: Why can't the device be controlled by SDK after upgrading the motion control program?**  
-A: After upgrading the motion control program, the motion control related configurations will be overwritten, and the [SDK_CONFIG](deploy.md#22-sdk) and [SDK_CLIENT_IP](deploy.md#23-sdk_client_ip) parameters need to be reconfigured.
+A: After upgrading the motion control program, the motion control related configurations will be overwritten, and the [SDK_CONFIG](deploy.md#22-modify-sdk-configuration-file) and [SDK_CLIENT_IP](deploy.md#23-configure-sdk_client_ip) parameters need to be reconfigured.
 
 **Q: Is there a ROS interface?**  
 A: There is currently no ROS interface.

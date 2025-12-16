@@ -27,10 +27,13 @@ According to the output content number after executing the command, refer to the
 
 | Motion Control Version Number | SDK Version |
 | --- | --- |
-| 0.2.6 ~ Latest | [0.2.7](https://github.com/zsibot/zsibot_sdk/tree/v0.2.7) |
+| 0.2.6 ~ Latest | [0.2.7](https://github.com/zsibot/zsibot_sdk) |
+<!-- | 0.2.6 ~ Latest | [0.2.7](https://github.com/zsibot/zsibot_sdk/tree/v0.2.7) | -->
+
 
 ### Quadruped Wheel-Legged (zsl-1w)
 
 | Motion Control Version Number | SDK Version |
 | --- | --- |
-| 0.3.1 ~ Latest | [0.2.7](https://github.com/zsibot/zsibot_sdk/tree/v0.2.7) |
+| 0.3.1 ~ Latest | [0.2.7](https://github.com/zsibot/zsibot_sdk) |
+<!-- | 0.3.1 ~ Latest | [0.2.7](https://github.com/zsibot/zsibot_sdk/tree/v0.2.7) | -->
