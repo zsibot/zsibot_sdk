@@ -228,33 +228,7 @@ None
 
 ---
 
-### 1.9 Shake Hand
-
-**Function Prototype**
-
-```cpp
-shakeHand()
-```
-
-**Function Overview**
-Control the robot dog to shake hands
-
-**Parameter Description**
-
-None
-
-**Return Value Type: uint32_t**
-
-| Return Value | Description |
-|------|------|
-| 0 | Normal |
-
-**Remarks**
-Must be called in standing state
-
----
-
-### 1.10 Attitude Control
+### 1.9 Attitude Control
 
 **Function Prototype**
 
@@ -285,7 +259,7 @@ Must be called in standing state
 
 ---
 
-### 1.11 Get Attitude/Velocity/Position
+### 1.10 Get Attitude/Velocity/Position
 
 **Function Prototype**
 
@@ -455,7 +429,7 @@ None
 
 ---
 
-### 1.12 Get Battery Power
+### 1.11 Get Battery Power
 
 **Function Prototype**
 
@@ -481,7 +455,7 @@ None
 
 ---
 
-### 1.13 Get Control Mode
+### 1.12 Get Control Mode
 
 **Function Prototype**
 
@@ -509,9 +483,9 @@ None
 
 ---
 
-### 1.14 Joint Information Acquisition
+### 1.13 Joint Information Acquisition
 
-#### 1.14.1 Get Joint Angles
+#### 1.13.1 Get Joint Angles
 
 **Function Prototype**
 
@@ -543,7 +517,7 @@ None
 
 ---
 
-#### 1.14.2 Get Joint Velocities
+#### 1.13.2 Get Joint Velocities
 
 **Function Prototype**
 
@@ -575,7 +549,7 @@ None
 
 ---
 
-#### 1.14.3 Get Joint Torques
+#### 1.13.3 Get Joint Torques
 
 **Function Prototype**
 

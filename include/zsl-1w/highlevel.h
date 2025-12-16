@@ -24,7 +24,6 @@ class HighLevel {
 
   uint32_t crawl(const float vx, const float vy, const float yaw_rate);
   void cancelCrawl();
-  uint32_t shakeHand();
   uint32_t attitudeControl(const float roll_vel, const float pitch_vel,
                            const float yaw_vel, const float height_vel);
 
