@@ -57,10 +57,10 @@ target_include_directories(highlevel_demo PRIVATE
 )
 
 # lowlevel示例
-add_executable(lowlevel_demo lowlevel_demo.cpp)
-target_link_libraries(lowlevel_demo ${MC_SDK_LIB})
-target_include_directories(lowlevel_demo PRIVATE 
-    ${CMAKE_SOURCE_DIR}/../../../include 
-    ${CMAKE_SOURCE_DIR}/../../../include/zsl-1
-)
+# add_executable(lowlevel_demo lowlevel_demo.cpp)
+# target_link_libraries(lowlevel_demo ${MC_SDK_LIB})
+# target_include_directories(lowlevel_demo PRIVATE 
+#     ${CMAKE_SOURCE_DIR}/../../../include 
+#     ${CMAKE_SOURCE_DIR}/../../../include/zsl-1
+# )
     
